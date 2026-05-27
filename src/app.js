@@ -5,6 +5,15 @@ import './style.css'
 import { getMovies, createMovie } from './appService.js'
 import { login } from './authService.js'
 
+const doc = {
+    loginButton: document.querySelector('#loginButton')
+}
+
+doc.loginButton.addEventListener('click', () => {
+    console.log('belépés indul...');
+    startLogin();
+});
+
 function startLogin() {
     const user = {
         name: 'mari',
@@ -23,3 +32,5 @@ function startCreateMovie() {
     //TODO: folytatás
 
 }
+
+
