@@ -3,6 +3,15 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './style.css'
 
 import { getMovies, createMovie } from './appService.js'
+import { login } from './authService.js'
+
+function startLogin() {
+    const user = {
+        name: 'mari',
+        password: 'titok'
+    }
+    login(user);
+}
 
 function startCreateMovie() {
     const movie = {
