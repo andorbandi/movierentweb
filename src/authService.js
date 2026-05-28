@@ -1,9 +1,9 @@
 const host = 'http://localhost:8000/api/';
 
 function register() {}
-function login() {
+function login(user) {
     const url = host + 'login';
-    fetch(url, {
+    return fetch(url, {
         method: 'post',
         body: JSON.stringify(user),
         headers: {
@@ -12,7 +12,8 @@ function login() {
     })
     .then(response => response.json())
     .then(result => {
-        console.log(result);
+        // console.log(result);
+        return result
     })
     .catch(error => console.error(error));
 }
