@@ -10,7 +10,8 @@ const doc = {
     modalBackdrop: document.querySelector('#modal-backdrop'),
     addButton: document.querySelector('#addButton'),
     closeButton: document.querySelectorAll('.closeButton'),
-    movieform: document.querySelector('#movieForm')
+    movieform: document.querySelector('#movieForm'),
+    exitButton: document.querySelector('#exitButton')
 }
 
 const modalState = {
@@ -38,18 +39,33 @@ for(let i = 0; i < 2; i++) {
 }
 
 doc.movieform.addEventListener('submit', (event) => {
-    e.preventDefault()
+    event.preventDefault()
     console.log('űrlap feldolgozása');
-    const formData = new FormData(e.target)
-    const title = formData.get('title')
-    console.log(title);
+    const formData = new FormData(event.target)
+    const movie = {
+        title: formData.get('title'),
+        director: formData.get('director'),
+        release: Number(formData.get('release'))
+    }
+    console.log(movie);
+    createMovie(movie)
+        .then(res => {
+            console.log('Sikeres mentés:', res);
+        })
+        .catch(err => {
+            console.error('Hiba:', err);
+        });
 })
 
-
-doc.closeButton.addEventListener('click', () => {
-    console.log('Bezár gombra kattintva');
-    modalState.show = false
+doc.exitButton.addEventListener('click', () => {
+    startExit()
 })
+
+function startExit() {
+    console.log('Kilépés gombra kattintva');
+    localStorage.removeItem('token')
+    window.location.href = 'index.html'
+}
 
 function startAddMovie() {
     modalState.show = true
