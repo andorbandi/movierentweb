@@ -11,7 +11,8 @@ const doc = {
     addButton: document.querySelector('#addButton'),
     closeButton: document.querySelectorAll('.closeButton'),
     movieform: document.querySelector('#movieForm'),
-    exitButton: document.querySelector('#exitButton')
+    exitButton: document.querySelector('#exitButton'),
+    moviesTbody: document.querySelector('#movies-tbody')
 }
 
 const modalState = {
@@ -40,6 +41,14 @@ for(let i = 0; i < 2; i++) {
 
 doc.movieform.addEventListener('submit', (event) => {
     event.preventDefault()
+    startSaveMovie(event)
+})
+
+doc.exitButton.addEventListener('click', () => {
+    startExit()
+})
+
+function startSaveMovie(event) {
     console.log('űrlap feldolgozása');
     const formData = new FormData(event.target)
     const movie = {
@@ -55,11 +64,7 @@ doc.movieform.addEventListener('submit', (event) => {
         .catch(err => {
             console.error('Hiba:', err);
         });
-})
-
-doc.exitButton.addEventListener('click', () => {
-    startExit()
-})
+}
 
 function startExit() {
     console.log('Kilépés gombra kattintva');
@@ -93,8 +98,22 @@ function renderModal() {
 function startGetMovies() {
     getMovies().then(res => {
         console.log(res);
+        renderMovies(res.data);
     })
 }
 
-renderModal()
+function renderMovies(movies) {
+    const rows = movies.map((movie) => {
+        return `
+            <tr>
+                <td>${movie.id}</td>
+                <td>${movie.title}</td>
+                <td>${movie.director}</td>
+                <td>${movie.release}</td>
+            </tr>    
+        `
+    }).join('')
+    doc.moviesTbody.innerHTML = rows
+}
+
 startGetMovies()
